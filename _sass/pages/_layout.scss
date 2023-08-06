@@ -18,7 +18,8 @@
   }
 }
 .cover-card {
-  color: $text-color;
+  color: black;
+  text-align: center;
   padding: 0 30px;
   .avatar {
     border-radius: 50%;
@@ -27,17 +28,18 @@
     float: none;
     @include media-query($medium-screen) {
       margin-right: 0;
+      margin-left: 65px;
     }
   }
   .author_name {
     display: block;
-    color: #F36170;
+    color: #000000;
     font-size: 1.75em;
     text-transform: lowercase;
   }
   .author_job {
     display: block;
-    color: $secondary;
+    color: $warning;
     font-size: 0.8em;
     font-weight: 700;
     text-transform: uppercase;
@@ -48,7 +50,7 @@
     display: block;
   }
   @include media-query($medium-screen) {
-    text-align: right;
+    text-align: center;
     margin: 0 auto;
     padding: 0 0px 80px;
   }
@@ -87,13 +89,13 @@
       content: '';
     }
     & a {
-      margin-top: 1em;
+      margin-top: 1.5em;
       text-transform: lowercase;
-      font-size: 85%;
+      font-size: 120%;
       color: $secondary;
       &:hover,
       &:focus {
-        color: lighten($secondary, 14%);
+        color: lighten($danger, 5%);
       }
     }
   }

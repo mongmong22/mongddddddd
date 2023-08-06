@@ -3,11 +3,11 @@
 # Site wide configuration
 ####################################
 #
-title: Leonids
+title: minheemal life  # 블로그 제목
 email:
 description: A simple and awesome blog theme powered by jekyll.
-url: # the base hostname & protocol for your site
-keywords: ["blog", "jekyll"]
+url: "https://mongmong22.github.io/"  # 사이트 URL
+keywords: ["blog", "jekyll"]  # 블로그 관련 키워드
 
 #
 ###################################
@@ -16,8 +16,8 @@ keywords: ["blog", "jekyll"]
 #
 timezone:          Asia/Seoul
 markdown:          kramdown
-highlighter:       rouge
-excerpt_separator: <!--more-->
+highlighter:       rouge    # Pygments 또는 rouge(default)
+excerpt_separator: <!--more-->  #<!--more-->기준 더보기 제공
 permalink:         /articles/:year-:month/:title
 
 kramdown:
@@ -33,10 +33,10 @@ kramdown:
 ####################################
 #
 owner:
-  name: Leonids
-  avatar: leonids-logo.png
-  job: "A jekyll theme"
-  bio: "A simple and awesome blog theme powered by jekyll."
+  name: minhee
+  avatar: /mongmong.jpg
+  job: 벡엔드 개발자
+  bio: # 개발자가 되려고요!
   email:
   disqus-shortname:
   twitter: #username

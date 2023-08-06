@@ -30,7 +30,7 @@
 
 // Post Section
 section.post {
-	margin-bottom: 80px;
+	margin-bottom: 50px;
 }
 
 // Back home button
@@ -46,7 +46,12 @@ section.post {
 
 // Post title
 .post-title {
-
+  color: $danger;
+  margin-right: 10px;
+  &:hover,
+  &:focus {
+		color: #ca3645;
+	}
 }
 
 .post-title-link {
@@ -63,8 +68,9 @@ section.post {
 .post-meta {
   font-size: 13px;
   font-weight: bold;
+  display: inline-block;
 	.post-date {
-		color: $secondary;
+		color: black;
 	}
 	.post-author {
 		text-transform: uppercase;
@@ -75,7 +81,7 @@ section.post {
 		color: $warning;
 	}
   .read-time {
-    color: $primary;
+    color: rgb(151, 151, 151);
   }
 }
 
@@ -94,16 +100,29 @@ a.read-more {
   }
 }
 
+.post-header h3{
+  margin: 0;
+}
+
+.post-description p {
+  margin: 0px;
+}
+
 #post h1 {
-  margin: 0.5em 0 1em;
+  margin: 1.5em 0 0 0;  //1em
 }
 #post h2 {
-  margin: 2em 0 0.8em;
-  padding-bottom: 0.7em;
+  margin: 2em 0 0.5em;
+  padding-bottom: 0.5em;
   border-bottom: 1px solid #ddd;
 }
 #post h3 {
-  margin: 1.75em 0 1.2em;
+  margin: 1.5em 0 0.5em;
+  position: relative;
+}
+
+#post h4 {
+  margin: 1.75em 0 0.5em;
   position: relative;
 }
 

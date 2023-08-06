@@ -1,44 +1,172 @@
 ---
 layout: post
-title: "Testing \"Readability\" with a Bunch of Text"
-excerpt: "A ton of text to test readability."
-categories: [paragraph]
+title: 코틀린 기초 문법 정리
+excerpt: "코틀린 완벽 가이드 1~4장 기초 문법 총정리"
+categories: [kotlin]
 comments: true
 ---
 
-Portland in shoreditch Vice, labore typewriter pariatur hoodie fap sartorial Austin. Pinterest literally occupy Schlitz forage. Odio ad blue bottle vinyl, 90's narwhal commodo bitters pour-over nostrud. Ugh est hashtag in, fingerstache adipisicing laboris esse Pinterest shabby chic Portland. Shoreditch bicycle rights anim, flexitarian laboris put a bird on it vinyl cupidatat narwhal. Hashtag artisan skateboard, flannel Bushwick nesciunt salvia aute fixie do plaid post-ironic dolor McSweeney's. Cliche pour-over chambray nulla four loko skateboard sapiente hashtag.
 
-Vero laborum commodo occupy. Semiotics voluptate mumblecore pug. Cosby sweater ullamco quinoa ennui assumenda, sapiente occupy delectus lo-fi. Ea fashion axe Marfa cillum aliquip. Retro Bushwick keytar cliche. Before they sold out sustainable gastropub Marfa readymade, ethical Williamsburg skateboard brunch qui consectetur gentrify semiotics. Mustache cillum irony, fingerstache magna pour-over keffiyeh tousled selfies.
+## 함수
 
-## Cupidatat 90's lo-fi authentic try-hard
+#### 코틀린 함수
+- `fun`키워드를 통해 함수를 정의한다.
 
-In pug Portland incididunt mlkshk put a bird on it vinyl quinoa. Terry Richardson shabby chic +1, scenester Tonx excepteur tempor fugiat voluptate fingerstache aliquip nisi next level. Farm-to-table hashtag Truffaut, Odd Future ex meggings gentrify single-origin coffee try-hard 90's.
+- 코틀린 함수의 파라미터는 무조건 불변이다.
+    
+    자바에서 함수의 파라미터를 함수 내부에서 변경이 가능하지만 코틀린의 경우 함수 파라미터를 함수 본문에서 변경할 수 없다.  
+    
+    ```kotlin
+    fun increment(n : int): Int {
+    	return n++  //X -> n을 변경할 수 없다.
+    }
+    ```
+    
+    파라미터가 참조형이라면 참조만 복사되기 때문에, 파라미터 자체는 바뀔 수 없지만, 파라미터가 가리키는 데이터는 바뀔 수 있다. 
+    
+    ```kotlin
+    fun increment(a : IntArray): Int {
+    	return ++a[0]  //파라미터가 가리키는 데이터는 바뀔 수 있다.
+    }
+    ```
+    
+- 파라미터는 항상 타입을 지정해야 한다.
+    
+    코틀린에서는 타입 추론이 있지만, 함수 정의 시 파라미터 타입은 추론하지 못한다.
+    
+    - 반환 타입은 추론이 가능하지만 그래도 명시해야한다.
+        - (예외) Unit 타입을 반환하는 경우는 반환 타입을 생략할 수 있다.
+        - (예외) 식이 본문인 함수는 반환 타입을 생략할 수 있다. (단일 식으로만 구현될 수 있는 경우)
+    
+    ```kotlin
+    fun circleArea(radius : Double): Double = PI*radius*radius
+    //반환값이 Double로 추론된다.
+    
+    fun circleArea(radius : Double) = {
+    		return PI*radius*radius  //X -> 이렇게는 불가
+    }
+    //식이 본문인 함수 안에서는 return문이 금지되기 때문이다.
+    ```
+    
 
-* Sartorial hoodie
-* Labore viral forage
-* Tote bag selvage
-* DIY exercitation et id ugh tumblr church-key
+#### 위치 기반 인자와 이름 붙은 인자
 
-Incididunt umami sriracha, ethical fugiat VHS ex assumenda yr irure direct trade. Marfa Truffaut bicycle rights, kitsch placeat Etsy kogi asymmetrical. Beard locavore flexitarian, kitsch photo booth hoodie plaid ethical readymade leggings yr.
+- 위치기반인자
+    
+    자바와 같이 함수 호출 인자가 순서대로 파라미터에 전달되는 것을 위치 기반 인자라고 한다. 
+    
+- 이름 붙은 인자.
+    
+    코틀린에서는 이름 붙은 인자를 사용할 수도 있다. 
+    
+    파라미터의 이름을 명시하여 전달하는 방식으로 순서는 중요하지 않다.
+    
+    ```kotlin
+    rectangleArea(width = w, height = h)
+    rectangleArea(height = h, width = w)
+    //둘 다 사용 가능. 두 개가 같은 의미.
+    ```
+    
+- 위치 기반 인자와 이름 붙은 인자를 혼용하여 사용할 수도 있다.
 
-Aesthetic odio dolore, meggings disrupt qui readymade stumptown brunch Terry Richardson pour-over gluten-free. Banksy american apparel in selfies, biodiesel flexitarian organic meh wolf quinoa gentrify banjo kogi. Readymade tofu ex, scenester dolor umami fingerstache occaecat fashion axe Carles jean shorts minim. Keffiyeh fashion axe nisi Godard mlkshk dolore. Lomo you probably haven't heard of them eu non, Odd Future Truffaut pug keytar meggings McSweeney's Pinterest cred. Etsy literally aute esse, eu bicycle rights qui meggings fanny pack. Gentrify leggings pug flannel duis.
+#### 오버로딩과 디폴트 값
 
-## Forage occaecat cardigan qui
+- 오버로딩
+    
+    같은 함수를 여러번 작성할 수 있지만, 파라미터 타입이 모두 달라야한다. 
+    
+    ```kotlin
+    // 오버로딩이 올바른 경우
+    fun readInt() = readLine()!!.toInt()
+    fun readInt(radix: Int) = readLine()!!.toInt(radix)
+    
+    // 아래와 같이 반환값만 다른 경우 컴파일 오류 발생
+    fun plus(a: String, b: String) = a + b
+    fun plus(a: String, b: String) = a.toInt() + b.toInt()  // X : conflicting overloads
+    ```
+    
+- 디폴트 파라미터
+    
+    파라미터 뒤에 변수 초기화 식을 추가해 파라미터에 디폴트 값을 지정할 수 있다. 
+    
+    ```kotlin
+    fun readInt(radix: Int = 10) = readLine()!!.toInt(radix)
+    ```
+    
 
-Fashion axe hella gastropub lo-fi kogi 90's aliquip +1 veniam delectus tousled. Cred sriracha locavore gastropub kale chips, iPhone mollit sartorial. Anim dolore 8-bit, pork belly dolor photo booth aute flannel small batch. Dolor disrupt ennui, tattooed whatever salvia Banksy sartorial roof party selfies raw denim sint meh pour-over. Ennui eu cardigan sint, gentrify iPhone cornhole.
+#### vararg 가변 인자
 
-> Whatever velit occaecat quis deserunt gastropub, leggings elit tousled roof party 3 wolf moon kogi pug blue bottle ea. Fashion axe shabby chic Austin quinoa pickled laborum bitters next level, disrupt deep v accusamus non fingerstache.
+- 파라미터의 개수가 정해지지 않았을 때 array형태로 전달할 수 있다.
 
-Tote bag asymmetrical elit sunt. Occaecat authentic Marfa, hella McSweeney's next level irure veniam master cleanse. Sed hoodie letterpress artisan wolf leggings, 3 wolf moon commodo ullamco. Anim occupy ea labore Terry Richardson. Tofu ex master cleanse in whatever pitchfork banh mi, occupy fugiat fanny pack Austin authentic. Magna fugiat 3 wolf moon, labore McSweeney's sustainable vero consectetur. Gluten-free disrupt enim, aesthetic fugiat jean shorts trust fund keffiyeh magna try-hard.
+- 파라미터 정의 앞에 `vararg`변경자를 붙여 사용한다.
 
-## Hoodie Duis
+- vararg 파라미터가 맨 마지막에 있지 않다면, vararg 파라미터 이후의 파라미터는 이름 붙은 인자로만 전달할 수 있으므로, 다른 파라미터를 같이 사용해야 한다면 vararg를 가장 마지막에 선언하는 것이 좋다.
 
-Actually salvia consectetur, hoodie duis lomo YOLO sunt sriracha. Aute pop-up brunch farm-to-table odio, salvia irure occaecat. Sriracha small batch literally skateboard. Echo Park nihil hoodie, aliquip forage artisan laboris. Trust fund reprehenderit nulla locavore. Stumptown raw denim kitsch, keffiyeh nulla twee dreamcatcher fanny pack ullamco 90's pop-up est culpa farm-to-table. Selfies 8-bit do pug odio.
+    ```kotlin
+    fun printSorted(vararg items: Int) { } // 1
 
-### Thundercats Ho!
+    fun printSorted(a: Int, b: Int, c: Int) { } // 2
 
-Fingerstache thundercats Williamsburg, deep v scenester Banksy ennui vinyl selfies mollit biodiesel duis odio pop-up. Banksy 3 wolf moon try-hard, sapiente enim stumptown deep v ad letterpress. Squid beard brunch, exercitation raw denim yr sint direct trade. Raw denim narwhal id, flannel DIY McSweeney's seitan. Letterpress artisan bespoke accusamus, meggings laboris consequat Truffaut qui in seitan. Sustainable cornhole Schlitz, twee Cosby sweater banh mi deep v forage letterpress flannel whatever keffiyeh. Sartorial cred irure, semiotics ethical sed blue bottle nihil letterpress.
+    fun main() {
+    printSorted(1, 2, 3) // 2번 함수가 가변인자 함수가 아니므로 2번을 선택
+    printSorted(1, 2)    // 적용할 수 있는 함수가 1번밖에 없으므로 1번을 선택
+    }
+    ```
 
-Occupy et selvage squid, pug brunch blog nesciunt hashtag mumblecore skateboard yr kogi. Ugh small batch swag four loko. Fap post-ironic qui tote bag farm-to-table american apparel scenester keffiyeh vero, swag non pour-over gentrify authentic pitchfork. Schlitz scenester lo-fi voluptate, tote bag irony bicycle rights pariatur vero Vice freegan wayfarers exercitation nisi shoreditch. Chambray tofu vero sed. Street art swag literally leggings, Cosby sweater mixtape PBR lomo Banksy non in pitchfork ennui McSweeney's selfies. Odd Future Banksy non authentic.
+#### 함수의 영역과 가시성
 
-Aliquip enim artisan dolor post-ironic. Pug tote bag Marfa, deserunt pour-over Portland wolf eu odio intelligentsia american apparel ugh ea. Sunt viral et, 3 wolf moon gastropub pug id. Id fashion axe est typewriter, mlkshk Portland art party aute brunch. Sint pork belly Cosby sweater, deep v mumblecore kitsch american apparel. Try-hard direct trade tumblr sint skateboard. Adipisicing bitters excepteur biodiesel, pickled gastropub aute veniam.
+- 코틀린 함수는 세 가지로 구분
+    - 파일에 직접 선언된 최상위 함수
+    - 어떤 타입 내부에 선언된 멤버 함수
+    - 다른 함수 안에 선언된 지역 함수
+<br><br>
+- 최상위 함수
+    - 디폴트로 공개(public) 함수이다.
+    - 함수가 정의된 파일 내부 뿐만 아니라 프로젝트 어디에서나 사용이 가능하다.
+    - `private`, `internal`  (가시성 변경자) 키워드를 붙여 함수가 쓰이는 위치를 제한할 수 있다.
+        - `private` 함수가 정의된 파일 안에서만 해당 함수를 볼 수 있다.
+        - `internal` 함수가 적용된 모듈 내부에서만 함수를 사용할 수 있다.
+<br><br>
+- 지역 함수
+    - 함수 내부에 정의된 함수로 함수를 감싸는 블록으로 영역이 한정된다.
+    - 지역 함수를 둘러싼 함수, 블록에 선언된 변수나 함수에 접근할 수 있다.
+    - 지역 함수와 변수에는 가시성 변경자를 붙일 수 없다.
+
+## 패키지와 임포트
+
+#### 임포트 디렉티브
+
+- `app.util.foo` 와 `app.util.bar`에 `readInt()`함수가 들어있는 경우
+- 별명(alias) 기능을 사용할 수 있다.
+    
+    임포트한 선언에 새 이름을 부여할 수 있고 그 이름은 임포트 디렉티브가 있는 파일 전체 영역에서 유효하다. 
+    
+    ```kotlin
+    import foo.redInt as fooReadInt
+    import bar.redInt as barReadInt
+    
+    fun main() {
+    	val n = fooReadInt()
+    	val m = barReadInt()
+    }
+    ```
+    
+- `*`을 사용해 해당 영역에 속한 모든 선언을 한꺼번에 임포트 할 수 있다.
+    
+    이 경우 지정해서 임포트하는 디렉티브보다 우선순위가 낮다
+    
+    ```kotlin
+    import app.util.foo.readInt
+    import app.util.bar.*
+    
+    fun main(){
+    	val n = readInt() //app.util.foo.readInt가 사용된다.
+    }
+    ```
+    
+
+## 조건문
+
+#### if
+
+코틀린은 자바와 달리 3항 연산자가 없다.
