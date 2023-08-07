@@ -66,6 +66,7 @@ section.post {
 
 // Post meta
 .post-meta {
+  margin-top : 15px;
   font-size: 13px;
   font-weight: bold;
   display: inline-block;
@@ -116,12 +117,14 @@ a.read-more {
   padding-bottom: 0.5em;
   border-bottom: 1px solid #ddd;
 }
-#post h3 {
-  margin: 1.5em 0 0.5em;
-  position: relative;
-}
 
-#post h4 {
+// default
+// #post h3 {
+//   margin: 1.5em 0 0.5em;
+//   position: relative;
+// }
+
+#post h3 {
   margin: 1.75em 0 0.5em;
   position: relative;
 }
